@@ -1,135 +1,49 @@
-# Vietnamese question answering with BERT
+# Hệ thống trả lời câu hỏi tiếng Việt với BERT
 
-- Q: Người giàu nhất việt nam (richest man in Vietnam) ?
-- A: Phạm Nhật Vượng
+- Câu hỏi: Người giàu nhất Việt Nam?
+- Trả lời: Phạm Nhật Vượng
 
-- Q: Ai là tác giả của ngôn ngữ lập trình C (Who invented C programming language)
-- A: Dennis Ritchie
+- Câu hỏi: Ai là tác giả của ngôn ngữ lập trình C?
+- Trả lời: Dennis Ritchie
 
-### Install prerequisites (python3)
-```pip3 install -r requirements.txt```
+### Cài đặt các gói cần thiết (python3)
+```bash
+pip3 install -r requirements.txt
+```
 
-### Download pretrain model 
-Link: https://drive.google.com/open?id=1ml-Qwv4yHxepp852N-aL0U5iZzqLNZ4B
-After that, extract and put all files into "resources" directory
+### Tải mô hình huấn luyện trước
+- Đường dẫn: https://drive.google.com/open?id=1ml-Qwv4yHxepp852N-aL0U5iZzqLNZ4B
+- Sau khi tải về, giải nén và đặt tất cả các tệp vào thư mục "resources"
 
-### Limitations
-Due to the limitation of current dataset, the system only supports questions about person
+### Hạn chế
+Do giới hạn của tập dữ liệu hiện tại, hệ thống chỉ hỗ trợ các câu hỏi về người
 
-# Further improvements
- - Add more training data, and more question type as well
- - Leverage english dataset (https://rajpurkar.github.io/SQuAD-explorer/). 
-     - You can simply translate English data  --> Vietnamese (using Google Translation API) and concatenate translated data into original dataset. 
-     - You can pre-train model on translated data and then retrain on Vietnamese dataset
-     - Cross-lingual Transfer Learning approaches
- - Use machine leanring for information retrieval step. Dataset can be found in https://challenge.zalo.ai/portal/question-answering
+# Cải tiến trong tương lai
+ - Bổ sung thêm dữ liệu huấn luyện và mở rộng các loại câu hỏi
+ - Tận dụng tập dữ liệu tiếng Anh (https://rajpurkar.github.io/SQuAD-explorer/):
+     - Có thể dịch dữ liệu tiếng Anh sang tiếng Việt (sử dụng Google Translation API) và kết hợp dữ liệu đã dịch vào tập dữ liệu gốc
+     - Có thể huấn luyện trước mô hình trên dữ liệu đã dịch và sau đó huấn luyện lại trên tập dữ liệu tiếng Việt
+     - Áp dụng các phương pháp học chuyển giao đa ngôn ngữ (Cross-lingual Transfer Learning)
+ - Sử dụng học máy cho bước truy xuất thông tin. Tập dữ liệu có thể tìm thấy tại https://challenge.zalo.ai/portal/question-answering
 
-# Architecture Overview
- - Question Answering based IR - Speech and language processing (daniel jurafsky)
+# Tổng quan về kiến trúc
+ - Trả lời câu hỏi dựa trên truy xuất thông tin - Xử lý ngôn ngữ và tiếng nói (Daniel Jurafsky)
  - https://web.stanford.edu/~jurafsky/slp3/24.pdf
- - For better understanding: Open notebook file --> change the question --> run line by line
+ - Để hiểu rõ hơn: Mở tệp notebook --> thay đổi câu hỏi --> chạy từng dòng
  
 <img src="Framework.png">
 
 
-### Sample:
+### Ví dụ:
 
-question = 'ai là người giàu nhất Việt Nam'
+câu hỏi = 'ai là người giàu nhất Việt Nam'
 
-### Using google to find relevant documents:
+### Sử dụng Google để tìm các tài liệu liên quan:
+----------------------------------------------
+Tài liệu 0
 
-Document 0
+Passage: Tính đến ngày 28/12, theo Forbes, Việt Nam có 6 tỷ phú USD với tổng tài sản đạt 13,4 tỷ USD, tăng nhẹ so với mức 13,2 tỷ USD hồi đầu năm. Ông Phạm Nhật Vượng ghi nhận tài sản giảm nhẹ nhưng vẫn là người giàu nhất trong danh sách. Trên thị trường chứng khoán Việt Nam, ông Vượng giàu nhất năm thứ 15 liên tiếp, giữ vị trí số 1 từ năm 2010 tới nay. Chủ tịch Tập đoàn Vingroup (VIC) kiêm CEO VinFast (VFS) Phạm Nhật Vượng có tài sản trị giá 4,1 tỷ USD, xếp thứ 833 trên thế giới; giảm so với mức 4,6 tỷ USD hồi đầu năm. Chủ tịch VietJet (VJC) Nguyễn Thị Phương Thảo xếp thứ hai trong số các tỷ phú Việt Nam với tài sản đạt 2,8 tỷ USD, tăng so với mức 2,4 tỷ USD hồi đầu năm. Chủ tịch Tập đoàn Hòa Phát (HPG) Trần Đình Long đứng thứ ba với 2,4 tỷ USD, so với mức 2,3 tỷ USD hồi đầu năm. Chủ tịch Techcombank (TCB) Hồ Hùng Anh xếp vị trí thứ tư với 1,8 tỷ USD, so với mức 1,4 tỷ USD đầu năm 2024. Ông Trần Bá Dương (Thaco) và gia đình xếp thứ 5 với 1,2 tỷ USD, giảm so với mức 1,5 tỷ USD đầu năm. Chủ tịch Masan Group (MSN) Nguyễn Đăng Quang có tài sản không đổi ở mức 1 tỷ USD. Tính theo giá trị cổ phiếu các đại gia nắm giữ trên sàn chứng khoán, các vị trí cũng không có nhiều thay đổi. Giàu nhất vẫn là ông Phạm Nhật Vượng với hơn 84 nghìn tỷ đồng (khoảng 3,3 tỷ USD). Ông Trần Đình Long đứng thứ 2 với hơn 44,3 nghìn tỷ đồng. Bà Nguyễn Thị Phương Thảo ở vị trí thứ 3 với hơn 23,7 nghìn tỷ đồng. Các tỷ phú giàu nhất Việt Nam. Ảnh: DK Ông Đỗ Anh Tuấn (Chủ tịch Sunshine) xếp vị trí thứ 4 tính theo giá trị cổ phiếu nắm giữ, với tổng giá trị hơn 23,5 nghìn tỷ đồng, xếp trên ông Hồ Hùng Anh (20,6 nghìn tỷ đồng), ông Nguyễn Đăng Quang (19,5 nghìn tỷ đồng). Trong năm 2024, giới đầu tư ghi nhận Chủ tịch Tập đoàn FPT Trương Gia Bình nằm trong top 10 người giàu nhất, với tài sản hơn 13,3 nghìn tỷ đồng. Năm 2023, có thời điểm ông Bình trở lại danh sách này sau 14 năm. Năm 2006, ông Trương Gia Bình là người giàu nhất trên sàn chứng khoán Việt Nam (khi đó ông Bình có 2.350 tỷ đồng). Năm 2007, vị trí này thuộc về ông Đặng Thành Tâm (6.290 tỷ đồng). Năm 2008 và 2009 là ông Đoàn Nguyên Đức (6.160 tỷ và 11.440 tỷ đồng). Các năm sau đó vị trí số 1 thuộc về ông Phạm Nhật Vượng. Năm 2024, ông Đặng Thành Tâm xếp thứ 34 với hơn 4.000 tỷ đồng. Ông Đoàn Nguyên Đức (Bầu Đức) đứng thứ 42 với hơn 3.800 tỷ đồng. Bà Vũ Thị Hiền (vợ ông Trần Đình Long) vẫn ở vị trí thứ 8 giống như năm trước. Tuy nhiên, năm 2024 chứng kiến Chủ tịch Novaland (NVL) Bùi Thành Nhơn, Chủ tịch Bất động sản Phát Đạt (PDR) Nguyễn Văn Đạt và bà Phạm Thu Hương (vợ ông Phạm Nhật Vượng) rời khỏi top 10 người giàu nhất. Thay vào đó là ông Trương Gia Bình, bà Nguyễn Thị Thanh Thủy (vợ ông Hùng Anh) với 9.044 tỷ đồng, bà Nguyễn Thị Thanh Tâm (mẹ ông Hùng Anh) với 8.567 tỷ đồng. Biến động tài sản tỷ phú USD Việt trong năm 2024 theo tính toán của Forbes. Biểu đồ: M. Hà Năm tới, tài sản các tỷ phú biến động ra sao? Giống như năm 2023, nhiều doanh nghiệp bất động sản vẫn gặp khó khăn do nợ nần, dù có những khoảng thời gian thị trường địa ốc sôi động. Đây là nguyên nhân khiến tài sản nhiều đại gia suy giảm; trong đó có ông Nhơn, ông Đạt khi bị rơi khỏi top 10. Ngành bán lẻ, sản xuất kinh doanh ô tô... cũng gặp khó nên tài sản của các doanh nhân như Trần Bá Dương, Nguyễn Đăng Quang, Nguyễn Đức Tài suy giảm hoặc không tăng. Ngành vật liệu xây dựng tích cực hơn, giá thép hồi phục giúp HPG đi lên và tài sản tỷ phú Trần Đình Long tăng nhẹ. HPG cũng đang đẩy nhanh tiến độ Nhà máy Dung Quất 2 tại Quảng Ngãi, dự kiến hoàn thành đầu năm 2025. Với Vingroup, năm 2024 chứng kiến sự tái cấu trúc quyết liệt của tỷ phú Phạm Nhật Vượng với hàng loạt thương vụ lớn như bán Vinhomes Vũ Yên, bán VinBrain cho Nvidia, bán Vincom Retail (VRE)... ; những tín hiệu tích cực từ hãng xe VinFast (VFS) và sự tham gia của thế hệ thứ 2 các con trai của ông Vượng. Tuy nhiên, thách thức cũng còn nhiều. Ông Bùi Thành Nhơn năm thứ 3 liên tiếp không còn nằm trong danh sách tỷ phú USD của Forbes. Ngân hàng là nhóm có kết quả kinh doanh vẫn khá tốt và tăng trưởng tín dụng cuối năm gần đạt so với mục tiêu NHNN đề ra. Tài sản của ông Hùng Anh và gia đình tăng khá mạnh trong năm 2024. Nhiều cổ phiếu ngân hàng khác như Vietinbank (CTG), Sacombank (STB) của ông Dương Công Minh lên đỉnh lịch sử... Hai người con của ông Hồ Hùng Anh (Chủ tịch Techcombank) là Hồ Thủy Anh và Hồ Anh Minh lọt top 11-12 người giàu nhất trên TTCK. Du lịch hồi phục góp phần thúc đẩy ngành hàng không. Tài sản tỷ phú Nguyễn Thị Phương Thảo tăng mạnh nhất, thêm 500 triệu USD. Trong năm 2025, khả năng du lịch và hàng không sẽ tiếp tục khởi sắc. Dòng vốn FDI đổ mạnh vào Việt Nam không chỉ góp phần giúp nhóm bất động sản công nghiệp (như ông Đặng Thành Tâm, ông Trần Đình Long, ông Phạm Nhật Vượng... ), mà còn thúc đẩy du lịch. Năm 2024, ông Đào Hữu Huyền (Hóa chất Đức Giang) và ông Hồ Xuân Năng (Vicostone) cũng ghi nhận sự bứt phá, tài sản tăng thêm hơn 1.000 tỷ mỗi người, lên lần lượt 8.330 tỷ đồng và 8.060 tỷ đồng. Theo Nghị quyết Chính phủ ban hành hồi tháng 5, đến năm 2030, Việt Nam phấn đấu có ít nhất 10 tỷ phú USD. Ông Vượng, ông Long, bà Thảo, ông Hùng Anh được xem là tỷ phú đứng vững trong danh sách của Forbes. Giới đầu tư kỳ vọng, danh sách này sẽ sớm có tên ông Trương Gia Bình khi FPT đang dồn lực vào mảng trí tuệ nhân tạo (AI). Ngoài ra là ông Đỗ Anh Tuấn - Chủ tịch CTCP Tập đoàn Sunshine (KSF) và CTCP Phát triển Sunshine Homes (SSH), ông Đào Hữu Huyền - Hóa chất Đức Giang hay ông Nguyễn Văn Đạt - Bất động sản Phát Đạt... Việt Nam cũng có nhiều doanh nhân nổi tiếng, được xem là siêu giàu nhưng kín tiếng như bà Nguyễn Thị Nga BRG, ông Vũ Văn Tiền Geleximco, ông "vua hàng hiệu" Johnathan Hạnh Nguyễn, ông Đỗ Minh Phú Doji, ông Đỗ Quang Hiển T&T, gia đình ông Đặng Văn Thành - Thành Thành Công... Việt Nam sẽ có 10 tỷ phú USD: Doanh nhân nào giàu tiềm năng nhất?Theo nghị quyết vừa ban hành của Chính phủ, đến năm 2030, Việt Nam phấn đấu có ít nhất 10 tỷ phú USD, 5 doanh nhân quyền lực nhất châu Á. Vậy ai sẽ là 4 cái tên tiếp theo sau 6 tỷ phú USD hiện tại?
 
-Link: https://vi.wikipedia.org/wiki/T%E1%BB%A9_%C4%91%E1%BA%A1i_Ph%C3%BA_h%E1%BB%99
+Answer : Phạm Nhật Vượng
 
-Sample content:
-
- Tứ đại phú hộ (chữ Hán: 四大富戶) là cụm từ dân gian ở miền Nam Việt Nam đặt ra vào cuối thế kỷ XIX đến đầu thế kỷ XX để chỉ bốn người giàu nhất Sài Gòn, cũng như nhất miền Nam Kỳ lục tỉnh và cả Đông Dương thời bấy giờ. . Để dễ nhớ, dân gian có câu Nhất Sỹ, Nhì Phương, Tam Xường, Tứ Định [1]. . Đây là câu được nhiều người biết. . Tuy nhiên, về vị trí thứ tư, được dành cho một số đại phú hộ khác như Tứ Trạch, Tứ Hỏa hoặc Tứ Bưởi.
-
-Tên thật là Lê Phát Đạt (1841-1900), còn có tên gọi là Sỹ, về sau được .....
-
-------------------------------
-
-Document 1
-
-Link: https://www.bbc.com/vietnamese/world-47844894
-
-Sample content:
-
- ►► Bí mật trên tờ TIỀN Việt Nam: https://youtu.be/7TZQ83Cg4pY►► Cười cùng Trấn Thành: http://bit.ly/2XVOInt►► Top Video: https://bit.ly/322ffxB►► Miss World Việt Nam: https://youtu.be/CKZyBGdgS5A5 tỷ phú đô la người Việt Nam này là những người góp mặt trong danh sách những tỷ phú giàu nhất thế giới do tạp chí uy tín Forbes bình chọn.► Đăng ký để xem nhiều hơn: https://goo.gl/C6U3V9► Youtube: https://www.youtube.com/senvangtv----------------
-
-TOP 5 TỶ PHÚ GIÀU NHẤT VIỆT NAM - Tiền nhiều để làm gì .....
-
-------------------------------
-
-Document 2
-
-Link: https://www.youtube.com/watch?v=WDJXJd1-Vhc
-
-Sample content:
-
- Giá trị tài sản của ông Phạm Nhật Vượng đang không ngừng tăng lên qua các giai đoạn thống kê
-Thống kê của Forbes cho thấy, tính đến thời điểm 20/3/2019, giá trị tài sản của ông Phạm Nhật Vượng, người giàu nhất Việt Nam hiện nay đã đạt 8,1 tỷ USD, tăng 1,5 tỷ USD so với thời điểm tạp chí này công bố danh sách những người giàu nhất thế giới năm 2019 vào ngày 5/3 vừa qua.
-Tuy nhiên, với giá cổ phiếu VIC đã tăng mạnh trong hơn 1 năm qua và đang ở trong vùng đỉnh, khối tài sản của ông Phạm Nhật Vượ .....
-
-------------------------------
-...........
-
-### Find relevant passages from documents
-
-Passage ranked 1
-
-VOV.VN - Ông Phạm Nhật Vượng là người giàu nhất Việt Nam với khối tài sản trị giá 6,7 tỷ USD, tương đương 152,9 ngàn tỷ đồng.
-
-------------------------------
-
-Passage ranked 2 
-
-Trước đó vào năm 2010, Phạm Nhật Vượng là người giàu nhất trên TTCK Việt Nam với số tài sản gần 15.800 tỷ đồng, giàu thứ nhì Việt Nam (theo xếp hạng trên sàn chứng khoán) năm 2007, 2008. [4] Ông đạt được vị trí này vào năm 2007, khi Công ty Vinpearl thuộc nhóm các công ty của Vincom niêm yết 100 triệu cổ phiếu trên sàn giao dịch chứng khoán Tp. Hồ Chí Minh.
-
-------------------------------
-
-Passage ranked 3 
-
-Ông Phạm Nhật Vượng tiếp tục được công nhận là người giàu nhất Việt Nam với tài sản định giá 6,6 tỷ USD, đứng thứ 239 thế giới, tăng 2,3 tỷ USD so với năm ngoái.
-
-------------------------------
-
-Passage ranked 4 
-
-“Ai là người giàu nhất Việt Nam?”. báo Tiền Phong. 27/1/2006
-
-------------------------------
-.......
-
-### Extracting answers with BERT
-
-Passage:  Ông Phạm Nhật Vượng tiếp tục được công nhận là người giàu nhất Việt Nam với tài sản định giá 6,6 tỷ USD, đứng thứ 239 thế giới, tăng 2,3 tỷ USD so với năm ngoái.
-
-Answer :  Phạm Nhật Vượng
-
-Score  :  0.9999549482428222
-
-------------------------------
-
-Passage:  VOV.VN - Ông Phạm Nhật Vượng là người giàu nhất Việt Nam với khối tài sản trị giá 6,7 tỷ USD, tương đương 152,9 ngàn tỷ đồng.
-
-Answer :  Phạm Nhật Vượng
-
-Score  :  0.9999439551387689
-
-------------------------------
-
-Passage:  Cho đến nay vẫn chưa ai thay thế được vị trí người giàu nhất Việt Nam của ông Phạm Nhật Vượng. Giá trị tài sản của ông Vượng đã tăng “chóng mặt” trong tháng 3/2019 này, tuy nhiên, con số có thể cao hơn cả thống kê của Forbes.
-
-Answer :  Phạm Nhật Vượng
-
-Score  :  0.9999150228723965
-
-------------------------------
-
-Passage:  Trước đó vào năm 2010, Phạm Nhật Vượng là người giàu nhất trên TTCK Việt Nam với số tài sản gần 15.800 tỷ đồng, giàu thứ nhì Việt Nam (theo xếp hạng trên sàn chứng khoán) năm 2007, 2008. [4] Ông đạt được vị trí này vào năm 2007, khi Công ty Vinpearl thuộc nhóm các công ty của Vincom niêm yết 100 triệu cổ phiếu trên sàn giao dịch chứng khoán Tp. Hồ Chí Minh.
-
-Answer :  Phạm Nhật Vượng
-
-Score  :  0.9997637352104664
+Score : 0.9998912321667877
