@@ -7,7 +7,7 @@
 - A: Dennis Ritchie
 
 ### Install prerequisites (python3)
-pip3 install -r requirements.txt
+```pip3 install -r requirements.txt```
 
 ### Download pretrain model 
 Link: https://drive.google.com/open?id=1ml-Qwv4yHxepp852N-aL0U5iZzqLNZ4B
