@@ -33,6 +33,9 @@ Do giới hạn của tập dữ liệu hiện tại, hệ thống chỉ hỗ tr
  
 <img src="Framework.png">
 
+## Kiến trúc mã nguồn
+
+![Image](https://github.com/user-attachments/assets/6eaad7c6-f39d-4df8-9435-dc6129ba40b0)
 
 ### Ví dụ:
 
